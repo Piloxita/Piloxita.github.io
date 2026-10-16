@@ -5,19 +5,131 @@
 <meta name="google-site-verification" content="lXlYkl5ZRREeLTIO6m_DdJp7Txe0nNQ_l_07oCRoLuw">
 <meta name="google-site-verification" content="fVgHys7290-MLrVvxvF1A3KbjQYTK8jKX02YyT8vhwU">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Piloxita Home Assistant</title>
-<style>
-  body { font: 16px/1.6 system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1rem; color: #222; }
-  h1 { font-size: 1.6rem; }
-  a { color: #0b57d0; }
-</style>
+<title>Long Nguyen · Data scientist &amp; vibe coder</title>
+<meta name="description" content="Long Nguyen, data scientist and vibe coder in Ho Chi Minh City. I build models that make decisions, and agents that build the rest.">
+<meta name="theme-color" content="#08090c">
+<link rel="canonical" href="https://piloxita.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Long Nguyen">
+<meta property="og:title" content="Long Nguyen · Data scientist &amp; vibe coder">
+<meta property="og:description" content="I build models that make decisions, and agents that build the rest.">
+<meta property="og:url" content="https://piloxita.github.io/">
+<meta property="og:image" content="https://piloxita.github.io/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
 </head>
 <body>
-<h1>Piloxita Home Assistant</h1>
-<p>A private assistant that one household runs on its own computer. It helps the household's members
-with everyday office work: finding and summarising emails and documents, drafting replies, and
-preparing files.</p>
-<p>It is not a public service. It has no sign-up and is used only by the people who set it up.</p>
-<p><a href="privacy.html">Privacy policy</a></p>
+<a class="skip" href="#main">Skip to content</a>
+<div class="backdrop" aria-hidden="true"></div>
+<canvas id="field" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="brand" href="./" aria-label="Long Nguyen, home"><b>&gt;_</b> long nguyen</a>
+  <nav aria-label="Sections">
+    <a href="#data">Data</a>
+    <a href="#build">Projects</a>
+    <a class="opt" href="#home-assistant">Assistant</a>
+    <a href="https://github.com/Piloxita">GitHub</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" data-state="noise">
+    <div class="wrap">
+      <h1>Long Nguyen</h1>
+      <p class="role">Data scientist &amp; vibe coder · Ho Chi Minh City</p>
+      <p class="lede">I build models that make decisions, and agents that build the rest.</p>
+      <a class="cue" href="#data"><span aria-hidden="true">↓</span> scroll</a>
+    </div>
+  </section>
+
+  <section class="chapter" id="data" data-state="signal" aria-labelledby="data-h">
+    <div class="wrap">
+      <p class="kicker">01 · signal</p>
+      <h2 id="data-h">Data science</h2>
+      <div class="ds">
+        <article class="panel">
+          <h3>Decision engines for consumer lending</h3>
+          <p>Gradient-boosted models (XGBoost) and rules in production on BigQuery and Vertex AI, deciding who to contact, when and how.</p>
+        </article>
+        <article class="panel">
+          <h3>Marketing mix modeling</h3>
+          <p>Bayesian MMM (Google Meridian) to split sales lift across channels and plan budgets.</p>
+        </article>
+        <article class="panel">
+          <h3>Education</h3>
+          <p>Master of Data Science, University of British Columbia (2025).<br>BBA Finance, First Class Honours, University of New Brunswick (2023).</p>
+        </article>
+        <ul class="chips" aria-label="Toolkit">
+          <li>Python</li><li>SQL</li><li>BigQuery</li><li>Vertex AI</li><li>XGBoost</li><li>Bayesian modeling</li><li>experimentation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="build" data-state="build" aria-labelledby="build-h">
+    <div class="wrap">
+      <div class="build-head">
+        <p class="kicker">02 · build</p>
+        <h2 id="build-h">Vibe-coded</h2>
+        <p>Real tools, built by directing AI agents from a prompt.</p>
+      </div>
+      <ul class="cards">
+        <li class="card panel">
+          <h3>Piloxita Master Bot</h3>
+          <p>Telegram drives Claude Code on my laptop from my phone, with a team of agents (researcher, builder, critic) and a guard that asks before anything risky.</p>
+          <ul class="tags" aria-label="Stack"><li>Python</li><li>Claude Code</li><li>Telegram</li></ul>
+        </li>
+        <li class="card panel">
+          <h3>Second brain</h3>
+          <p>An Obsidian knowledge base that agents keep. They digest every day and ingest articles and videos with local Whisper.</p>
+          <ul class="tags" aria-label="Stack"><li>LLM wiki</li><li>Whisper</li><li>Git</li></ul>
+        </li>
+        <li class="card panel">
+          <h3>Piloxita Hub</h3>
+          <p>A self-hosted dashboard for reports, videos and bot status, reachable from anywhere over Tailscale.</p>
+          <ul class="tags" aria-label="Stack"><li>Python</li><li>HTML</li><li>Tailscale</li></ul>
+        </li>
+        <li class="card panel">
+          <h3>Recruiting assistant</h3>
+          <p>A bot that screens CVs against job descriptions and drafts job posts.</p>
+          <ul class="tags" aria-label="Stack"><li>LLM</li><li>Telegram</li></ul>
+        </li>
+        <li class="card panel">
+          <h3>Short-video pipeline</h3>
+          <p>Vertical videos with Vietnamese voiceover, built from a prompt.</p>
+          <ul class="tags" aria-label="Stack"><li>OpenMontage</li><li>TTS</li></ul>
+        </li>
+        <li class="card panel ha" id="home-assistant">
+          <h3>Piloxita Home Assistant</h3>
+          <p>A private assistant that one household runs on its own computer. It helps the household's members
+          with everyday office work: finding and summarising emails and documents, drafting replies, and
+          preparing files.</p>
+          <p>It is not a public service. It has no sign-up and is used only by the people who set it up.</p>
+          <ul class="tags" aria-label="Stack"><li>Gmail API</li><li>Drive API</li></ul>
+          <p class="links"><a href="assistant/">About the assistant</a> <a href="privacy.html">Privacy policy</a></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Built with Claude Code, by prompt.</p>
+    <nav aria-label="Footer">
+      <a href="https://github.com/Piloxita">GitHub</a>
+      <a href="assistant/">Home Assistant</a>
+      <a href="privacy.html">Privacy policy</a>
+    </nav>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
