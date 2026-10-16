@@ -85,7 +85,7 @@ check('href="../privacy.html"' in assistant, "assistant/ links ../privacy.html")
 # 5. No CDN at runtime, no employer names, local links resolve.
 for f in ["index.html", "privacy.html", "assistant/index.html", "404.html", "js/main.js", "js/field.js", "css/site.css"]:
     s = (ROOT / f).read_text()
-    check(not re.search(r'(src|href)="https?://(?!piloxita\.github\.io|github\.com|myaccount\.google|developers\.google)', s),
+    check(not re.search(r'(src|href)="https?://(?!piloxita\.github\.io|github\.com|myaccount\.google|developers\.google|incompetech\.com|creativecommons\.org)', s),
           f"{f}: no third-party runtime URLs")
     check(not re.search(r"trusting\s*social|trust\s*iq|autograph|\bTD\b|td\s*bank", s, re.I), f"{f}: no employer named")
     for ref in re.findall(r'(?:src|href)="([^"#:]+)"', s):

@@ -67,7 +67,7 @@ p { margin: 0 0 1em; }
   padding: 0.9rem clamp(1rem, 4vw, 2.5rem);
   background: linear-gradient(var(--bg), rgba(8, 9, 12, 0));
 }
-.brand { font: 400 1rem var(--mono); color: var(--text); text-decoration: none; }
+.brand { white-space: nowrap; font: 400 1rem var(--mono); color: var(--text); text-decoration: none; }
 .brand b { color: var(--accent); font-weight: 400; }
 .top nav { display: flex; gap: clamp(0.8rem, 2.5vw, 1.6rem); font-size: 0.95rem; }
 .top nav a { color: var(--muted); text-decoration: none; padding: 0.35rem 0; }
@@ -146,6 +146,7 @@ section.chapter { padding: 18vh 0 22vh; }
 }
 @media (max-width: 40rem) {
   .top nav a.opt { display: none; }
+  .top nav { gap: 0.85rem; font-size: 0.9rem; }
   section.chapter { padding: 12vh 0 16vh; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -157,3 +158,11 @@ section.chapter { padding: 18vh 0 22vh; }
 /* Home Assistant: its own section after the projects (Google reviews this as the app's homepage). */
 .assistant { padding: 0 0 6rem; }
 .assistant h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin: 0 0 1rem; }
+
+/* Videos */
+section.watch { padding-top: 0; }
+.reels video {
+  display: block; width: 100%; height: auto; max-height: 70vh; object-fit: contain;
+  border-radius: 10px; background: #000;
+}
+.credit { margin-top: 1.5rem; max-width: 44rem; font-size: 0.85rem; color: var(--muted); }
