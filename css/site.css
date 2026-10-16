@@ -153,3 +153,7 @@ section.chapter { padding: 18vh 0 22vh; }
   .cue span { animation: none; }
   #field { transition: none; }
 }
+
+/* Home Assistant: its own section after the projects (Google reviews this as the app's homepage). */
+.assistant { padding: 0 0 6rem; }
+.assistant h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin: 0 0 1rem; }

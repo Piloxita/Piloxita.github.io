@@ -100,7 +100,9 @@ const yieldTask = () => new Promise((r) => setTimeout(r, 0));
 export async function startField(canvas, gsap, ScrollTrigger) {
   const mobile = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
   const COUNT = mobile ? 6000 : 12000;
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  // Low-end devices (4 cores or fewer) render at 1x from the start.
+  const lowEnd = (navigator.hardwareConcurrency || 8) <= 4;
+  const dpr = lowEnd ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
 
   const renderer = new WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(dpr);
@@ -281,10 +283,20 @@ export async function startField(canvas, gsap, ScrollTrigger) {
     renderer.render(scene, camera);
   }
 
-  const onVis = () => {
-    if (document.hidden) { cancelAnimationFrame(raf); }
-    else if (running) { last = performance.now(); raf = requestAnimationFrame(frame); }
+  // Pause when the tab is hidden or the reader is past the chapters (assistant section, footer).
+  let inView = true;
+  const resume = () => {
+    if (running && inView && !document.hidden && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
   };
+  const pause = () => { cancelAnimationFrame(raf); raf = 0; };
+  const onVis = () => { if (document.hidden) pause(); else resume(); };
+  const visible = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+    inView = visible.size > 0;
+    if (inView) resume(); else pause();
+  });
+  document.querySelectorAll('#main > section:not(.assistant)').forEach((el) => io.observe(el));
   const onResize = () => layout();
 
   window.addEventListener('resize', onResize);
@@ -300,6 +312,7 @@ export async function startField(canvas, gsap, ScrollTrigger) {
     window.removeEventListener('pointermove', onMove);
     document.documentElement.removeEventListener('pointerleave', onLeave);
     document.removeEventListener('visibilitychange', onVis);
+    io.disconnect();
     geo.dispose(); mat.dispose(); axesGeo.dispose(); axesMat.dispose();
     renderer.dispose();
     canvas.classList.remove('on');

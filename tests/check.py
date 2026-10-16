@@ -70,12 +70,13 @@ check("<title>Privacy policy · Piloxita Home Assistant</title>" in privacy, "pr
 
 # 3. Home Assistant section on the root page, with the old text and a privacy link.
 old_home = text_of(old("index.html"), "body").replace("Piloxita Home Assistant", "", 1).replace("Privacy policy", "").strip()
-ha = re.search(r'<li class="card panel ha" id="home-assistant">(.*?)</li>\s*</ul>\s*</div>\s*</section>', index, re.S)
+ha = re.search(r'<section class="assistant" id="home-assistant"[^>]*>(.*?)</section>', index, re.S)
 check(bool(ha), "root page has #home-assistant section")
 if ha:
     check(old_home in text_of("<main>" + ha.group(1) + "</main>", "main"), "HA section carries the old homepage text")
     check('href="privacy.html"' in ha.group(1), "HA section links privacy.html")
-    check("<h3>Piloxita Home Assistant</h3>" in ha.group(1), "HA section clearly labelled")
+    check(re.search(r"<h2[^>]*>Piloxita Home Assistant</h2>", ha.group(1)), "HA section has its own h2")
+    check("Gmail and Google Drive access only" in ha.group(1), "HA section says why it needs Gmail/Drive")
 
 # 4. assistant/ page has the old text and links ../privacy.html.
 check(old_home in text_of(assistant, "main"), "assistant/ carries the old homepage text")
@@ -86,7 +87,7 @@ for f in ["index.html", "privacy.html", "assistant/index.html", "404.html", "js/
     s = (ROOT / f).read_text()
     check(not re.search(r'(src|href)="https?://(?!piloxita\.github\.io|github\.com|myaccount\.google|developers\.google)', s),
           f"{f}: no third-party runtime URLs")
-    check(not re.search(r"trusting\s*social", s, re.I), f"{f}: no employer named")
+    check(not re.search(r"trusting\s*social|trust\s*iq|autograph|\bTD\b|td\s*bank", s, re.I), f"{f}: no employer named")
     for ref in re.findall(r'(?:src|href)="([^"#:]+)"', s):
         if ref.startswith("/"):
             target = ROOT / ref.lstrip("/")
@@ -98,6 +99,21 @@ for f in ["index.html", "privacy.html", "assistant/index.html", "404.html", "js/
 
 for v in ["three.module.min.js", "gsap.min.js", "ScrollTrigger.min.js", "VERSIONS.md"]:
     check((ROOT / "vendor" / v).exists(), f"vendor/{v} present")
+
+# 7. Every page's tags are balanced (catches a botched hand edit).
+from html.parser import HTMLParser
+VOID = {"meta", "link", "br", "img", "input", "source", "hr"}
+class Balance(HTMLParser):
+    def __init__(self):
+        super().__init__(); self.stack = []; self.bad = []
+    def handle_starttag(self, tag, attrs):
+        if tag not in VOID: self.stack.append(tag)
+    def handle_endtag(self, tag):
+        if self.stack and self.stack[-1] == tag: self.stack.pop()
+        else: self.bad.append((tag, self.getpos()))
+for f in ["index.html", "privacy.html", "assistant/index.html", "404.html"]:
+    b = Balance(); b.feed((ROOT / f).read_text())
+    check(not b.bad and not b.stack, f"{f}: tags balanced {b.bad[:2] or ''}")
 
 print(f"\n{len(fails)} failure(s)")
 sys.exit(1 if fails else 0)
